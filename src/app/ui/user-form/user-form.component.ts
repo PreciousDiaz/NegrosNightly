@@ -3,7 +3,7 @@ import { ReactiveFormsModule, FormGroup, FormBuilder, Validators } from '@angula
 
 import { AuthService } from '../../core/auth.service';
 
-type UserFields = 'email' | 'password';
+type UserFields = 'email'| 'password';
 type FormErrors = { [u in UserFields]: string };
 
 @Component({
@@ -44,7 +44,7 @@ export class UserFormComponent implements OnInit {
   }
 
   signup() {
-    this.auth.emailSignUp(this.userForm.value['email'], this.userForm.value['password']);
+    this.auth.emailSignUp( this.userForm.value['email'],this.userForm.value['password']);
   }
 
   login() {

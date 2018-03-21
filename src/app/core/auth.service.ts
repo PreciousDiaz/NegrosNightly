@@ -14,6 +14,7 @@ interface User {
   email?: string | null;
   photoURL?: string;
   displayName?: string;
+ 
 }
 
 @Injectable()
@@ -84,8 +85,8 @@ export class AuthService {
 
   //// Email/Password Auth ////
 
-  emailSignUp(email: string, password: string) {
-    return this.afAuth.auth.createUserWithEmailAndPassword(email, password)
+  emailSignUp( email:string, password: string) {
+    return this.afAuth.auth.createUserWithEmailAndPassword( email, password)
       .then((user) => {
         this.notify.update('Welcome to Firestarter!!!', 'success');
         return this.updateUserData(user); // if using firestore
@@ -96,14 +97,15 @@ export class AuthService {
   emailLogin(email: string, password: string) {
     return this.afAuth.auth.signInWithEmailAndPassword(email, password)
       .then((user) => {
-        this.notify.update('Welcome to Firestarter!!!', 'success')
+      this.notify.update('Welcome to Firestarter!!!', 'success')
+	    this.router.navigate(['/notes']);
         return this.updateUserData(user); // if using firestore
       })
       .catch((error) => this.handleError(error) );
   }
 
   // Sends email allowing user to reset password
-  resetPassword(email: string) {
+    resetPassword(email: string) {
     const fbAuth = firebase.auth();
 
     return fbAuth.sendPasswordResetEmail(email)
@@ -133,6 +135,7 @@ export class AuthService {
       email: user.email || null,
       displayName: user.displayName || 'nameless user',
       photoURL: user.photoURL || 'https://goo.gl/Fz9nrQ',
+	  
     };
     return userRef.set(data);
   }
