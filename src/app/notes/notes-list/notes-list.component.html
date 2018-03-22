@@ -1,11 +1,21 @@
-<h1>Firestore Notes</h1>
-<p>This is a very basic demo of the Firestore database.</p>
-
-<input [(ngModel)]="content" placeholder="Add your own note" class="input">
-
-
-<button class="button is-success" (click)="createNote()" [disabled]="content?.length < 2 || content?.length > 200">
-  Add Note
+<h1>Negros Nigthly Events</h1>
+<p></p>
+<br>
+<br>
+<br>
+<input [(ngModel)]="content" placeholder="Search Event" class="input">
+<button class="button is-success" (click)="createNote()">
+  Search
+</button>
+<p>Browse by Categories</p>
+<button class="button is-success" (click)="createNote()">
+  Concert
+</button>
+<button class="button is-success" (click)="createNote()" >
+  Gig
+</button>
+<button class="button is-success" (click)="createNote()" >
+  Show
 </button>
 <hr>
 <div *ngFor="let note of notes | async">

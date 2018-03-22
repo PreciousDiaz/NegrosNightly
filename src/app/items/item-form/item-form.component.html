@@ -2,7 +2,7 @@
 
 <label class="label">Name: </label>
 
-<input placeholder="Item Title" class="input"
+<input placeholder="Event Name" class="input"
 [(ngModel)]="item.title"
 required minlength="2" maxlength="23"
 #title='ngModel' autofocus>
@@ -10,7 +10,12 @@ required minlength="2" maxlength="23"
 <div *ngIf="title.dirty">
   <span *ngIf='title.errors; then errors else valid'>template renders here...</span>
 </div>
-
+<label class="label">Location: </label>
+<input placeholder = "Location" class= "input" />
+<label class="label">Date: </label>
+<input placeholder = "Date" class= "date" />
+<label class="label">Time: </label>
+<input placeholder = "Time" class= "input" />
 <button class="button is-primary" (click)='createItem()' [disabled]="!title.valid">Create</button>
 
 <ng-template #valid>
