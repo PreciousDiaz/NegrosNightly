@@ -1,22 +1,63 @@
-import { Component, OnInit } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-
 import { Item } from '../shared/item';
 
 import { ItemService } from '../shared/item.service';
 
+import { Component } from '@angular/core';
+
+import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/map';
+
+interface Event {
+  title:string;
+  description:string;
+  location:string;
+  category:string;
+  date:string;
+  time:string;
+}
+
+interface EventId extends Event { 
+  id:string;
+}
+
 @Component({
   selector: 'item-form',
   templateUrl: './item-form.component.html',
-  styleUrls: ['./item-form.component.scss'],
+  styleUrls: ['./item-form.component.scss']
 })
 export class ItemFormComponent {
+  eventsCol: AngularFirestoreCollection<Event>;
+  events: any;
 
-  item: Item = new Item();
+  eventDoc: AngularFirestoreDocument<Event>;
+  event: Observable<Event>;
 
-  constructor(private itemSvc: ItemService) { }
-  createItem() {
-    this.itemSvc.createItem(this.item);
-    this.item = new Item(); // reset item
+  title:string;
+  description:string;
+  location:string; 
+  category:string;
+  date:string;
+  time:string;
+
+  constructor(private afs: AngularFirestore) {}
+
+  ngOnInit() {
+    this.eventsCol = this.afs.collection('events');
+   // this.posts = this.postsCol.valueChanges();
+    this.events = this.eventsCol.snapshotChanges()
+      .map(actions => {
+        return actions.map(a => {
+          const data = a.payload.doc.data() as Event;
+          const id = a.payload.doc.id;
+          return { id, data };
+        });
+      });
   }
+
+  addEvent() {
+     //     this.afs.collection('posts').add({'title': this.title, 'content': this.content});
+    this.afs.collection('events').doc(this.title).set({'title': this.title, 'description': this.description, 'location': this.location, 'category': this.category, 'date': this.date,'time': this.time});
+  }
+
 }

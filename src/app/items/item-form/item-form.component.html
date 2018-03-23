@@ -1,22 +1,29 @@
-<h3>New Task Form</h3>
+<h3>New Event Form</h3>
+ <form>
+  <input type="radio" [(ngModel)]="category" name="category" value="Concert" ng-value = "'Concert'" checked> Concert<br>
+  <input type="radio" [(ngModel)]="category" name="category" value="Gig" ng-value = "'Gig'"> Gig<br>
+  <input type="radio" [(ngModel)]="category" name="category" value="Show" ng-value = "'Show'"> Show
+</form> 
 
 <label class="label">Name: </label>
 
 <input placeholder="Event Name" class="input"
-[(ngModel)]="item.title"
-required minlength="2" maxlength="23"
-#title='ngModel' autofocus>
+[(ngModel)]="title" name ="title"
+required minlength="2" maxlength="23" autofocus>
+<!--#title='ngModel' autofocus>-->
 
 <div *ngIf="title.dirty">
   <span *ngIf='title.errors; then errors else valid'>template renders here...</span>
 </div>
+<label class="label">Description: </label>
+<input [(ngModel)]="description" class = "input" name="description" placeholder="Description" autofocus>
 <label class="label">Location: </label>
-<input placeholder = "Location" class= "input" />
+<input [(ngModel)]="location" class = "input" name="location" placeholder="Location" autofocus>
 <label class="label">Date: </label>
-<input placeholder = "Date" class= "date" />
-<label class="label">Time: </label>
-<input placeholder = "Time" class= "input" />
-<button class="button is-primary" (click)='createItem()' [disabled]="!title.valid">Create</button>
+<input type="date" [(ngModel)]="date" class = "input" name = "date" data-date-inline-picker="true" />
+<label class="label">Time: 
+<input placeholder = "Time" [(ngModel)]="time" name ="time" class= "input" type="time" />
+<button class="button is-primary" (click)='addEvent()'>Create</button>
 
 <ng-template #valid>
   <p class="help is-success">looks good!</p>
